@@ -1,24 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import usePasswordValidator from "./use-password-validator";
 
 function App() {
+  const [password, setPassword] = useState("");
+  const { validate } = usePasswordValidator();
+
+  const { digits, isValid, lowercase, specialCharacters, uppercase, length } =
+    validate(password);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <br />
+      <br />
+
+      <input onChange={(e) => setPassword(e.target.value)} value={password} />
+
+      <br />
+      <br />
+
+      <span>At least 1 uppercase letter: {uppercase ? "✓" : "X"}</span>
+      <br />
+      <span>At least 1 lowercase letter: {lowercase ? "✓" : "X"}</span>
+      <br />
+      <span>
+        At least one special character: {specialCharacters ? "✓" : "X"}
+      </span>
+      <br />
+      <span>At least 1 number: {digits ? "✓" : "X"}</span>
+      <br />
+      <span>At least 10 characters: {length ? "✓" : "X"}</span>
+
+      <br />
+      <br />
+
+      <button disabled={!isValid}>Signup</button>
     </div>
   );
 }
